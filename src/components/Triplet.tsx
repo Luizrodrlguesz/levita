@@ -13,12 +13,12 @@ const principais: Service[] = [
   {
     img: '/assets/circles/svc-celulite.png',
     title: 'Celulite Zero',
-    text: 'Um protocolo exclusivo que combina técnicas avançadas de massagem e ativos específicos para reduzir visivelmente a celulite já na primeira sessão.',
+    text: 'Um protocolo exclusivo que combina técnicas avançadas de massagem, ativos específicos e aparalogia para reduzir visivelmente a celulite já na primeira sessão.',
   },
   {
     img: '/assets/circles/svc-bodyscupt.png',
     title: 'Bodyscupt Express',
-    text: 'Protocolo exclusivo que une o Método Redux Luxe + ativos cosméticos de alta performance e manta térmica. São 3 dias consecutivos.',
+    text: 'Protocolo exclusivo que une o Método Redux Luxe + ativos cosméticos de alta performance e manta térmica com foco na redução de volume corporal e celulite. São 3 dias consecutivos.',
   },
 ];
 

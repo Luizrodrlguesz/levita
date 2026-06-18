@@ -18,7 +18,7 @@ export default function Signature() {
           <p className="reveal delay-2">
             Método exclusivo que combina drenagem, modelagem e tonificação em
             uma única sessão de luxo. Desenvolvido para quem busca resultados
-            visíveis desde o primeiro atendimento — atua profundamente na
+            visíveis desde o primeiro atendimento. Atuando profundamente na
             retenção de líquidos, redução de celulite e definição corporal.
           </p>
         </div>
