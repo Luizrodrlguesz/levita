@@ -69,6 +69,14 @@ export default function Contact() {
               </div>
             </div>
           </div>
+          <a
+            className="contact__terms"
+            href="/termos.html"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Termos e condições de uso
+          </a>
         </div>
 
         <div className="contact__card reveal delay-2">

@@ -60,5 +60,12 @@ http.createServer((req, res) => {
     return send(res, path.join(root, 'public', urlPath));
   }
 
+  if (urlPath.endsWith('.html')) {
+    const staticPath = path.join(root, urlPath.slice(1));
+    if (fs.existsSync(staticPath)) {
+      return send(res, staticPath);
+    }
+  }
+
   send(res, path.join(root, 'index.html'));
 }).listen(3000, () => console.log('Dev server: http://localhost:3000'));
