@@ -1,6 +1,15 @@
+import Threads from './Threads';
+
 export default function Hero() {
   return (
     <section className="hero" id="top">
+      <Threads
+        className="hero__threads"
+        color={[0.95, 0.61, 0.53]}
+        amplitude={0.5}
+        distance={0.15}
+        enableMouseInteraction
+      />
       <div className="container hero__grid">
         <div className="hero__logo-wrap reveal">
           <img
@@ -10,8 +19,7 @@ export default function Hero() {
           />
         </div>
         <div className="hero__copy">
-          <div className="hero__eyebrow reveal">
-            <span className="rule" />
+          <div className="hero__eyebrow hero__eyebrow--solo reveal">
             <span>Massagem &amp; Estética · Lisboa</span>
           </div>
           <h1 className="hero__title reveal delay-1">
@@ -20,7 +28,7 @@ export default function Hero() {
           </h1>
           <p className="hero__lead reveal delay-2">
             Uma experiência sensorial de autocuidado — drenagem, modelação e
-            escultura corporal no conforto da sua casa ou no nosso espaço em
+             escultura corporal {/* no conforto da sua casa ou */} no nosso espaço em 
             Telheiras.
           </p>
           <div className="hero__ctas reveal delay-3">

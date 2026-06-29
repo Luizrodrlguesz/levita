@@ -19,11 +19,17 @@ declare global {
 
 export default function BeforeAfter() {
   return (
-    <img-comparison-slider className="compare reveal delay-2" value="50">
+    <img-comparison-slider
+      className="compare reveal delay-2"
+      value="50"
+      onFocus={(e: React.FocusEvent<HTMLElement>) => {
+        e.currentTarget.blur();
+      }}
+    >
       {/* Imagem "Antes" */}
       <div slot="first" className="compare__slot">
         <img
-          src="/assets/redux-antes.png"
+          src="/assets/redux-antes.jpeg"
           alt="Antes"
           className="compare__img"
         />
@@ -33,7 +39,7 @@ export default function BeforeAfter() {
       {/* Imagem "Depois" */}
       <div slot="second" className="compare__slot">
         <img
-          src="/assets/redux-depois.png"
+          src="/assets/redux-depois.jpeg"
           alt="Depois"
           className="compare__img"
         />

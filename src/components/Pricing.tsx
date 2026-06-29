@@ -24,8 +24,8 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         title: 'Corpo inteiro',
         rows: [
           ['Sessão avulsa', '60€'],
-          ['Pack 4 sessões', '185€'],
-          ['Pack 8 sessões', '310€'],
+          ['Pack 4 sessões', '200€'],
+          ['Pack 8 sessões', '360€'],
         ],
       },
       {
@@ -65,7 +65,7 @@ const pricingData: Record<PricingKey, PricingCategory> = {
   },
   aparatologia: {
     label: 'Aparatologia',
-    note: 'Radiofrequência · Manta Térmica · LipoCavitação · Ledterapia · Emsculpt Zero',
+    note: 'Radiofrequência · Manta Térmica · LipoCavitação · Ledterapia',
     cards: [
       {
         label: 'Zona',
@@ -116,11 +116,18 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         ],
       },
       {
-        label: 'HIFU · Liposonic',
+        label: 'HIFU',
         title: 'HIFU',
         rows: [
           ['1 zona', '250€'],
           ['2 zonas', '450€'],
+          ['Mais informações', 'sob consulta'],
+        ],
+      },
+      {
+        label: 'Liposonic',
+        title: 'Liposonic',
+        rows: [
           ['Mais informações', 'sob consulta'],
         ],
       },
@@ -172,7 +179,7 @@ export default function Pricing() {
             key={k}
             className={`pricing__panel ${tab === k ? 'active' : ''}`}
           >
-            <div className="pricing__grid">
+            <div className={`pricing__grid pricing__grid--${k}`}>
               {pricingData[k].cards.map((c) => (
                 <div className="price-card" key={c.title}>
                   <div className="price-card__label">{c.label}</div>

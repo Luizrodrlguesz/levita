@@ -20,15 +20,15 @@ const tratamentos: Tratamento[] = [
     title: 'Bodyscupt Express',
     text: 'Protocolo avançado de remodelação corporal que combina drenagem, modelagem, manta térmica e ativos em 3 dias consecutivos.',
   },
-  {
-    img: '/assets/circles/trat-gordura.png',
-    title: 'Gordura Localizada',
-    text: 'Indicada na eliminação de gordura localizada que não desaparece com exercício físico.',
-  },
+  // {
+  //   img: '/assets/circles/trat-gordura.png',
+  //   title: 'Gordura Localizada',
+  //   text: 'Indicada na eliminação de gordura localizada que não desaparece com exercício físico.',
+  // },
   {
     img: '/assets/circles/ritual-redux.png',
     title: 'Ritual Redux Luxe',
-    text: 'Protocolo exclusivo que une o Método Redux Luxe + Argila Verde e manta térmica. São 4 sessões, sendo 1 por semana.',
+    text: 'Protocolo exclusivo que une o Método Redux Luxe + Argila Verde e manta térmica. São 4 sessões, sendo 1 por semana, indicado para quem tem foco na região abdominal.',
   },
   {
     img: '/assets/circles/hifu.png',
@@ -43,7 +43,7 @@ const tratamentos: Tratamento[] = [
   {
     img: '/assets/circles/liposonic.png',
     title: 'Liposonic',
-    text: 'Protocolo avançado de remodelação corporal que combina drenagem, modelagem, manta térmica e ativos. Total de 6 sessões.',
+    text: 'protocolo avançado para eliminar gordura localizada e remodelação corporal.',
   },
 ];
 

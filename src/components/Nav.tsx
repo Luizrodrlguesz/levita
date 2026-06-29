@@ -12,8 +12,8 @@ export default function Nav() {
 
   return (
     <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
-      <a href="#top" className="nav__logo">
-        Levit<span>á</span>
+      <a href="#top" className="nav__logo w-10">
+        <img src="/assets/levita-icon.png" alt="Levitá" />
       </a>
       <nav className="nav__links">
         <a href="#sobre">Sobre</a>

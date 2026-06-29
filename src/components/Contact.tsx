@@ -16,8 +16,7 @@ export default function Contact() {
             className="reveal delay-2"
             style={{ color: 'var(--ink-700)', maxWidth: 460, fontSize: 16 }}
           >
-            Atendemos no nosso espaço em Telheiras, Lisboa — ou no conforto da
-            sua casa. Agende pelo WhatsApp e reserve o seu momento.
+            Atendemos no nosso espaço em Telheiras, Lisboa. Agende pelo WhatsApp e reserve o seu momento.
           </p>
           <div className="contact__rows reveal delay-3">
             <div className="contact__row">
@@ -25,8 +24,8 @@ export default function Contact() {
               <div>
                 <h4>Morada</h4>
                 <p>
-                  Rua Padre Américo 18F, 1º andar / Escritório 6<br />
-                  Telheiras 1160‑548 · Lisboa
+                  Rua Prista Monteiro 12 - Loja A<br />
+                  Telheiras / Lisboa - 1600-253
                 </p>
               </div>
             </div>
@@ -35,11 +34,24 @@ export default function Contact() {
               <div>
                 <h4>Contactos</h4>
                 <p>
-                  <a href="tel:+351920129484">920 129 484</a> · WhatsApp
+                  <span className="contact__whatsapp">
+                    <span
+                      className="contact__whatsapp-icon"
+                      aria-hidden="true"
+                      style={{
+                        mask: 'url("/assets/wpp.svg") center / contain no-repeat',
+                        WebkitMask: 'url("/assets/wpp.svg") center / contain no-repeat',
+                      }}
+                    />
+                    <a href="tel:+351920129484">920 129 484</a> · WhatsApp
+                  </span>
                   <br />
                   <a href="mailto:levitamassagens@gmail.com">
                     levitamassagens@gmail.com
                   </a>
+                  <span className="contact__notice">
+                    Chamada para a rede móvel nacional ou WhatsApp
+                  </span>
                 </p>
               </div>
             </div>
