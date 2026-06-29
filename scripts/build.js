@@ -26,5 +26,6 @@ await esbuild.build({
 
 cpSync(path.join(root, 'public'), dist, { recursive: true });
 copyFileSync(path.join(root, 'index.html'), path.join(dist, 'index.html'));
+copyFileSync(path.join(root, 'termos.html'), path.join(dist, 'termos.html'));
 
 console.log('Build complete → dist/');
