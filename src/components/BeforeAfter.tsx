@@ -29,7 +29,7 @@ export default function BeforeAfter() {
       {/* Imagem "Antes" */}
       <div slot="first" className="compare__slot">
         <img
-          src="/assets/redux-antes.png"
+          src="/assets/redux-antes.jpeg"
           alt="Antes"
           className="compare__img"
         />
@@ -39,7 +39,7 @@ export default function BeforeAfter() {
       {/* Imagem "Depois" */}
       <div slot="second" className="compare__slot">
         <img
-          src="/assets/redux-depois.png"
+          src="/assets/redux-depois.jpeg"
           alt="Depois"
           className="compare__img"
         />

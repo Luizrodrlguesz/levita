@@ -69,11 +69,11 @@ export default function About() {
         </div>
         <div className="about__photo reveal delay-2">
           <div className="about__photo-frame">
-            <img src="/assets/adrian.png" alt="Adrian Gomes, fundadora" />
+            <img src="/assets/adrian-2.jpg" alt="Adrian Gomes, fundadora" />
           </div>
           <div className="about__badge">
-            <span className="num">100%</span>
-            <span className="lbl">Atendimento personalizado</span>
+            <span className="num">Método Redux Luxe</span>
+            <span className="lbl">Desde 2021 transformando Corpos</span>
           </div>
         </div>
       </div>
