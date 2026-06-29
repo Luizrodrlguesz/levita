@@ -75,7 +75,7 @@ export default function Contact() {
             target="_blank"
             rel="noreferrer"
           >
-            Termos e condições
+            Termos e condições de uso
           </a>
         </div>
 

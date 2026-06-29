@@ -84,7 +84,7 @@ a { color: inherit; text-decoration: none; }
 
 section {
   position: relative;
-  padding: clamp(30px, 12vw, 30px) 0;
+  padding: clamp(80px, 12vw, 160px) 0;
 }
 
 /* ---------- Reveal animations ---------- */
@@ -1190,21 +1190,21 @@ img-comparison-slider.compare:active .compare__handle {
   color: var(--green-900);
   margin: 14px 0 48px;
 }
-.terms__section { margin-bottom: 20px; }
-.terms__section h2 {
+.terms__term { margin-bottom: 30px; }
+.terms__term h2 {
   font-family: var(--serif);
   font-weight: 400;
   font-size: 22px;
   color: var(--green-800);
   margin: 0 0 8px;
 }
-.terms__section p {
+.terms__term p {
   color: var(--ink-700);
   font-size: 15px;
   line-height: 1.6;
   margin: 0 0 8px;
 }
-.terms__section p strong {
+.terms__term p strong {
   color: var(--rose-600);
   font-weight: 500;
   margin-right: 6px;
