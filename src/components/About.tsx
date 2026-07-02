@@ -18,7 +18,7 @@ const staff = [
     role: 'Terapeuta Corporal',
     photo: '/assets/amanda-lima.jpg',
     description:
-      'Combina drenagem linfática e técnicas manuais avançadas, promovendo resultados visíveis com uma experiência verdadeiramente relaxante.',
+      'Combina drenagem linfática, modelação corporal e técnicas manuais avançadas, promovendo resultados visíveis com uma experiência verdadeiramente relaxante.',
   },
   {
     name: 'Maria Eduarda',
