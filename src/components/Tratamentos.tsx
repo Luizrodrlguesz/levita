@@ -36,12 +36,12 @@ const tratamentos: Tratamento[] = [
     text: 'Tratamento estético não invasivo que utiliza ultrassom focalizado de alta intensidade para estimular a produção natural de colágeno nas camadas profundas da pele.',
   },
   {
-    img: '/assets/circles/bodyscupt2.png',
+    img: '/assets/circles/bodyscupt.jpg',
     title: 'Bodyscupt',
     text: 'Protocolo avançado de remodelação corporal — drenagem, modelagem, manta térmica e ativos. Total de 6 sessões.',
   },
   {
-    img: '/assets/circles/liposonic.png',
+    img: '/assets/circles/liposonic.jpg',
     title: 'Liposonic',
     text: 'protocolo avançado para eliminar gordura localizada e remodelação corporal.',
   },

@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="footer__links">
           <a href="#sobre">Sobre</a>
           <a href="#metodo">Método</a>
-          <a href="#precos">Preços</a>
+          <a href="#precos">Valores</a>
           <a href="#contato">Contato</a>
         </div>
         <div className="footer__copy">

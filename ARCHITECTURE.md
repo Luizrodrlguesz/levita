@@ -2,7 +2,7 @@
 
 ## Visão geral
 
-Este projeto é um site institucional estático da **Levitá Massagem & Estética**, construído com **React 18**, **TypeScript** e **esbuild**. A aplicação apresenta a marca, o Método Redux Luxe, serviços, tratamentos, preços e formas de contato/agendamento em Lisboa.
+Este projeto é um site institucional estático da **Levitá Massagem & Estética**, construído com **React 18**, **TypeScript** e **esbuild**. A aplicação apresenta a marca, o Método Redux Luxe, serviços, tratamentos, valores e formas de contato/agendamento em Lisboa.
 
 A arquitetura é simples e orientada a componentes: cada seção visual da página fica em um componente React próprio dentro de `src/components`, enquanto o estilo visual completo é centralizado em `src/styles.css`.
 
@@ -105,7 +105,7 @@ Links principais:
 - Método
 - Massagens
 - Tratamentos
-- Preços
+- Valores
 - Agendar
 
 ### `Hero.tsx`
@@ -198,7 +198,7 @@ Os dados ficam no array local `tratamentos`.
 
 ### `Pricing.tsx`
 
-Seção interativa de preços com abas controladas por estado React.
+Seção interativa de valores com abas controladas por estado React.
 
 Estado principal:
 
@@ -213,7 +213,7 @@ Categorias disponíveis:
 - `aparatologia`: Aparatologia
 - `tratamentos`: Tratamentos
 
-Os preços, notas e cards ficam no objeto `pricingData`. Para alterar valores ou pacotes, este é o principal arquivo.
+Os valores, notas e cards ficam no objeto `pricingData`. Para alterar valores ou pacotes, este é o principal arquivo.
 
 ### `Contact.tsx`
 
@@ -256,7 +256,7 @@ Principais grupos:
 - Lista de massagens: `src/components/Massagens.tsx`
 - Lista de tecnologias: `src/components/Aparatologia.tsx`
 - Lista de tratamentos: `src/components/Tratamentos.tsx`
-- Preços e pacotes: `src/components/Pricing.tsx`
+- Valores e pacotes: `src/components/Pricing.tsx`
 - Contato, horários e WhatsApp: `src/components/Contact.tsx`
 - Cores, espaçamentos, responsividade e animações: `src/styles.css`
 

@@ -6,7 +6,7 @@ interface Apparatus {
 
 const apparatus: Apparatus[] = [
   {
-    img: '/assets/circles/radiofrequencia.png',
+    img: '/assets/circles/lipocavitacao.png',
     title: 'Radiofrequência',
     text: 'Indicada para melhorar a flacidez da pele, redução de rugas e celulite.',
   },
@@ -16,7 +16,7 @@ const apparatus: Apparatus[] = [
     text: 'Indicada para detox corporal — ajuda na queima de gordura e inchaço.',
   },
   {
-    img: '/assets/circles/lipocavitacao.png',
+    img: '/assets/circles/radiofrequencia.png',
     title: 'LipoCavitação',
     text: 'Indicada na eliminação de gordura localizada que não desaparece com exercício físico.',
   },

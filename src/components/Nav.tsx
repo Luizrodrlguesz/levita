@@ -20,7 +20,7 @@ export default function Nav() {
         <a href="#metodo">Método</a>
         <a href="#massagens">Massagens</a>
         <a href="#tratamentos">Tratamentos</a>
-        <a href="#precos">Preços</a>
+        <a href="#precos">Valores</a>
       </nav>
       <a className="nav__cta" href="#contato">
         Agendar

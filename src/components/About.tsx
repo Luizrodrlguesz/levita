@@ -1,31 +1,31 @@
 const staff = [
   {
     name: 'Lucas Neves',
-    role: 'Massoterapeuta',
+    role: 'Gerente',
     photo: '/assets/lucas-neves.jpg',
     description:
-      'Especialista em massagem terapêutica e relaxante, com toque firme e atenção a cada ponto de tensão.',
+      'Responsável pela gestão da Levitá, assegura a excelência no atendimento, a organização da equipa e uma experiência de qualidade em cada etapa da jornada da cliente.',
   },
   {
     name: 'Yudelkis',
-    role: 'Esteticista',
+    role: 'Terapeuta Corporal',
     photo: '/assets/Yudelkis.jpg',
     description:
-      'Conduz protocolos de modelação corporal com precisão técnica e cuidado em cada detalhe do atendimento.',
+      'Especialista em protocolos de modelação corporal, alia técnica apurada e sensibilidade para entregar resultados visíveis em cada sessão.',
   },
   {
     name: 'Amanda Lima',
     role: 'Terapeuta Corporal',
     photo: '/assets/amanda-lima.jpg',
     description:
-      'Une drenagem linfática e técnicas manuais para resultados visíveis e uma experiência verdadeiramente relaxante.',
+      'Combina drenagem linfática e técnicas manuais avançadas, promovendo resultados visíveis com uma experiência verdadeiramente relaxante.',
   },
   {
     name: 'Maria Eduarda',
-    role: 'Recepção & Atendimento',
+    role: 'Terapeuta Corporal',
     photo: '/assets/maria-eduarda.jpg',
     description:
-      'Primeiro contato com a Levitá, responsável por receber cada cliente com cuidado, agilidade e atenção.',
+      'Aplica protocolos de modelação e drenagem linfática com atenção aos detalhes, cuidando de cada cliente com agilidade e dedicação.',
   },
 ];
 
