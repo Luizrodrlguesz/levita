@@ -8,11 +8,18 @@ interface PriceCard {
 
 interface PricingCategory {
   label: string;
+  description?: string;
+  tagline?: string;
   note?: string;
   cards: PriceCard[];
 }
 
-type PricingKey = 'redux' | 'massagens' | 'aparatologia' | 'tratamentos';
+type PricingKey =
+  | 'redux'
+  | 'reduxPremium'
+  | 'massagens'
+  | 'aparatologia'
+  | 'tratamentos';
 
 const pricingData: Record<PricingKey, PricingCategory> = {
   redux: {
@@ -35,6 +42,31 @@ const pricingData: Record<PricingKey, PricingCategory> = {
           ['Sessão avulsa', '45€'],
           ['Pack 4 sessões', '140€'],
           ['Pack 8 sessões', '220€'],
+        ],
+      },
+    ],
+  },
+  reduxPremium: {
+    label: 'Método Redux Premium',
+    description:
+      'Método Redux Premium é a evolução do Método Redux Luxe. Combina as técnicas exclusivas do Método Redux Luxe com a aplicação de ativos de alta performance, cuidadosamente selecionados de acordo com as necessidades de cada cliente, potenciando os resultados no tratamento da celulite, flacidez e na melhoria da qualidade, firmeza e textura da pele.',
+    tagline:
+      'Um protocolo personalizado para quem procura resultados mais eficazes, aliado a uma experiência exclusiva',
+    cards: [
+      {
+        label: 'Corpo',
+        title: 'Corpo com ativos',
+        rows: [
+          ['Sessão única', '90€'],
+          ['Pack 4 sessões com ativos', '300€'],
+        ],
+      },
+      {
+        label: 'Zona',
+        title: 'Zona com ativos',
+        rows: [
+          ['Avulsa', '65€'],
+          ['Pack 4 sessões', '200€'],
         ],
       },
     ],
@@ -203,6 +235,14 @@ export default function Pricing() {
             key={k}
             className={`pricing__panel ${tab === k ? 'active' : ''}`}
           >
+            {pricingData[k].description && (
+              <div className="pricing__description">
+                <p>{pricingData[k].description}</p>
+                {pricingData[k].tagline && (
+                  <p className="pricing__tagline">{pricingData[k].tagline}</p>
+                )}
+              </div>
+            )}
             <div className={`pricing__grid pricing__grid--${k}`}>
               {pricingData[k].cards.map((c) => (
                 <div className="price-card" key={c.title}>
