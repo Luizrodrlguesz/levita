@@ -905,6 +905,21 @@ img-comparison-slider.compare:active .compare__handle {
   height: 2px;
   background: var(--rose-400);
 }
+.pricing__general-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+.pricing__general-note span {
+  border: 1px solid rgba(217,155,136,0.4);
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  color: var(--rose-400);
+  background: rgba(217,155,136,0.06);
+}
 .pricing__panel { display: none; animation: fadeIn .5s var(--ease-out); }
 .pricing__panel.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
@@ -916,10 +931,13 @@ img-comparison-slider.compare:active .compare__handle {
 }
 @media (min-width: 901px) {
   .pricing__grid--tratamentos {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .pricing__grid--tratamentos .price-card:nth-child(-n + 3) {
+    grid-column: span 2;
   }
   .pricing__grid--tratamentos .price-card:nth-last-child(-n + 2) {
-    grid-column: span 2;
+    grid-column: span 3;
   }
 }
 .price-card {

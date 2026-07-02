@@ -76,6 +76,14 @@ const pricingData: Record<PricingKey, PricingCategory> = {
           ['Pack 8 sessões', '220€'],
         ],
       },
+      {
+        label: 'Zona',
+        title: 'Emszero',
+        rows: [
+          ['Sessão avulsa', '50€'],
+          ['Pack 8 sessões', '250€'],
+        ],
+      },
     ],
   },
   tratamentos: {
@@ -91,14 +99,14 @@ const pricingData: Record<PricingKey, PricingCategory> = {
           ['Home care incluído', '✓'],
         ],
       },
-      {
-        label: 'Gordura Localizada · Zona',
-        title: 'Gordura Localizada',
-        rows: [
-          ['Sessão avulsa', '90€'],
-          ['Pack 4 sessões', '320€'],
-        ],
-      },
+      // {
+      //   label: 'Gordura Localizada · Zona',
+      //   title: 'Gordura Localizada',
+      //   rows: [
+      //     ['Sessão avulsa', '90€'],
+      //     ['Pack 4 sessões', '320€'],
+      //   ],
+      // },
       {
         label: 'Protocolo · 3 dias',
         title: 'Bodyscupt Express',
@@ -119,16 +127,24 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         label: 'HIFU',
         title: 'HIFU',
         rows: [
-          ['1 zona', '250€'],
-          ['2 zonas', '450€'],
-          ['Mais informações', 'sob consulta'],
+          ['Zona corporal', '250€'],
+          ['2 zonas corporal', '450€'],
+          ['Barriga completa', '550€'],
+          ['Perna completa (exceto glúteo)', '550€'],
+          ['Rosto (zona)', '200€'],
+          ['Rosto 2 zonas', '350€'],
+          ['Rosto completo', '450€'],
         ],
       },
       {
         label: 'Liposonic',
         title: 'Liposonic',
         rows: [
-          ['Mais informações', 'sob consulta'],
+          ['Zona corporal', '250€'],
+          ['2 zonas corporal', '450€'],
+          ['Barriga completa', '550€'],
+          ['Perna completa (exceto glúteo)', '550€'],
+          ['Glúteos', '600€'],
         ],
       },
     ],
@@ -152,7 +168,7 @@ export default function Pricing() {
               Valores
             </div>
             <h2 className="section-head__title reveal delay-1">
-              Tabela de <span className="it">preços</span>
+              Tabela de <span className="it">Valores</span>
             </h2>
           </div>
           <p className="section-head__lead reveal delay-2">
@@ -160,6 +176,14 @@ export default function Pricing() {
             cuidado. Validade: pack 4 sessões — 60 dias · pack 8 sessões — 90
             dias após pagamento.
           </p>
+        </div>
+
+        <div className="pricing__general-note reveal">
+          <span>IVA já incluso</span>
+          <span>
+            Adicionar avaliação — 15€ (valor deduzido na aquisição de
+            qualquer serviço)
+          </span>
         </div>
 
         <div className="pricing__tabs reveal">
