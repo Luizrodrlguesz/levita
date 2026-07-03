@@ -18,6 +18,7 @@ type PricingKey =
   | 'redux'
   | 'reduxPremium'
   | 'massagens'
+  | 'massagensAdrian'
   | 'aparatologia'
   | 'tratamentos';
 
@@ -30,7 +31,7 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         label: 'Corpo',
         title: 'Corpo inteiro',
         rows: [
-          ['Sessão avulsa', '60€'],
+          ['Sessão única', '60€'],
           ['Pack 4 sessões', '200€'],
           ['Pack 8 sessões', '360€'],
         ],
@@ -39,7 +40,7 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         label: 'Zona',
         title: 'Por zona',
         rows: [
-          ['Sessão avulsa', '45€'],
+          ['Sessão única', '45€'],
           ['Pack 4 sessões', '140€'],
           ['Pack 8 sessões', '220€'],
         ],
@@ -65,7 +66,7 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         label: 'Zona',
         title: 'Zona com ativos',
         rows: [
-          ['Avulsa', '65€'],
+          ['Sessão única ', '65€'],
           ['Pack 4 sessões', '200€'],
         ],
       },
@@ -79,7 +80,7 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         label: 'Zona',
         title: 'Massagem por zona',
         rows: [
-          ['Sessão avulsa', '35€'],
+          ['Sessão única', '35€'],
           ['Pack 4 sessões', '120€'],
           ['Pack 8 sessões', '200€'],
         ],
@@ -88,10 +89,25 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         label: 'Corpo',
         title: 'Massagem corpo inteiro',
         rows: [
-          ['Sessão avulsa', '50€'],
+          ['Sessão única', '50€'],
           ['Pack 4 sessões', '170€'],
           ['Pack 8 sessões', '250€'],
         ],
+      },
+    ],
+  },
+  massagensAdrian: {
+    label: 'Massagens com a Adrian',
+    cards: [
+      {
+        label: 'Corpo',
+        title: 'Massagem corpo inteiro',
+        rows: [['Sessão única', '80€']],
+      },
+      {
+        label: 'Zona',
+        title: 'Massagem por zona',
+        rows: [['Sessão única', '60€']],
       },
     ],
   },
@@ -103,7 +119,7 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         label: 'Zona',
         title: 'Tecnologia por zona',
         rows: [
-          ['Sessão avulsa', '45€'],
+          ['Sessão única', '45€'],
           ['Pack 4 sessões', '140€'],
           ['Pack 8 sessões', '220€'],
         ],
@@ -112,7 +128,7 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         label: 'Zona',
         title: 'Emszero',
         rows: [
-          ['Sessão avulsa', '50€'],
+          ['Sessão única', '50€'],
           ['Pack 8 sessões', '250€'],
         ],
       },
@@ -126,7 +142,7 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         label: 'Celulite Zero · Zona',
         title: 'Celulite Zero',
         rows: [
-          ['Sessão avulsa', '70€'],
+          ['Sessão única', '70€'],
           ['Pack 4 sessões', '310€'],
           ['Home care incluído', '✓'],
         ],
@@ -135,7 +151,7 @@ const pricingData: Record<PricingKey, PricingCategory> = {
       //   label: 'Gordura Localizada · Zona',
       //   title: 'Gordura Localizada',
       //   rows: [
-      //     ['Sessão avulsa', '90€'],
+      //     ['Sessão única', '90€'],
       //     ['Pack 4 sessões', '320€'],
       //   ],
       // },
@@ -151,7 +167,7 @@ const pricingData: Record<PricingKey, PricingCategory> = {
         label: 'Ritual',
         title: 'Ritual Redux Luxe',
         rows: [
-          ['Sessão avulsa', '90€'],
+          ['Sessão única', '90€'],
           ['Pack 4 sessões', '310€'],
         ],
       },
@@ -204,7 +220,7 @@ export default function Pricing() {
             </h2>
           </div>
           <p className="section-head__lead reveal delay-2">
-            Sessões avulsas e pacotes pensados para acompanhar o seu ritmo de
+            Sessões únicas e pacotes pensados para acompanhar o seu ritmo de
             cuidado. Validade: pack 4 sessões — 60 dias · pack 8 sessões — 90
             dias após pagamento.
           </p>

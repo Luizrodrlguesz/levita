@@ -166,8 +166,68 @@ section {
   transition: background .3s, transform .3s;
 }
 .nav__cta:hover { background: var(--rose-400); transform: translateY(-1px); }
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.nav__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
+.nav__toggle span {
+  display: block;
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  transition: transform .3s var(--ease-out), opacity .3s var(--ease-out);
+}
+.nav--open .nav__toggle span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav--open .nav__toggle span:nth-child(2) { opacity: 0; }
+.nav--open .nav__toggle span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.nav__mobile-menu {
+  display: none;
+}
 @media (max-width: 880px) {
   .nav__links { display: none; }
+  .nav__toggle { display: flex; }
+  .nav__mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: rgba(31, 53, 42, 0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s var(--ease-out);
+  }
+  .nav--open .nav__mobile-menu {
+    display: flex;
+    max-height: 260px;
+  }
+  .nav__mobile-menu a {
+    padding: 18px var(--gutter);
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cream-100);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
 }
 
 /* ---------- Hero ---------- */
@@ -888,9 +948,9 @@ img-comparison-slider.compare:active .compare__handle {
 .pricing__tab {
   background: transparent;
   border: none;
-  padding: 18px 24px;
+  padding: 18px 18px;
   color: rgba(247,227,217,0.6);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   position: relative;
@@ -901,7 +961,7 @@ img-comparison-slider.compare:active .compare__handle {
 .pricing__tab.active::after {
   content:'';
   position: absolute;
-  left: 24px; right: 24px; bottom: -1px;
+  left: 18px; right: 18px; bottom: -1px;
   height: 2px;
   background: var(--rose-400);
 }
