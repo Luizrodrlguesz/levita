@@ -229,7 +229,7 @@ export default function Pricing() {
         <div className="pricing__general-note reveal">
           <span>IVA já incluso</span>
           <span>
-            Adicionar avaliação — 15€ (valor deduzido na aquisição de
+            Avaliação — 15€ (valor deduzido na aquisição de
             qualquer serviço)
           </span>
         </div>
