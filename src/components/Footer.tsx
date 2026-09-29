@@ -11,6 +11,8 @@ export default function Footer() {
           <a href="#metodo">Método</a>
           <a href="#precos">Valores</a>
           <a href="#contato">Contato</a>
+          <a href="#/avaliar">Avaliar</a>
+          <a href="#/hub">Área da Clínica</a>
         </div>
         <div className="footer__copy">
           © {new Date().getFullYear()} Levitá Massagem · Lisboa

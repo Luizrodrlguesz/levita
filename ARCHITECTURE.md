@@ -14,6 +14,7 @@ A arquitetura é simples e orientada a componentes: cada seção visual da pági
 - **Node.js**: servidor HTTP de desenvolvimento (`scripts/dev.js`).
 - **CSS global**: tokens de design, layout, responsividade e animações.
 - **img-comparison-slider**: web component usado para o comparador de antes/depois do Método Redux Luxe.
+- **localStorage**: persistência das avaliações enquanto não existe backend.
 
 Scripts principais:
 
@@ -44,6 +45,11 @@ npm run build  # type-check + bundle minificado em dist/
     ├── main.tsx
     ├── App.tsx
     ├── styles.css
+    ├── data/
+    │   └── reviews.ts   ← store de avaliações (localStorage)
+    ├── hooks/
+    │   ├── useRoute.ts  ← router por hash
+    │   └── useReviews.ts
     └── components/
         ├── Nav.tsx
         ├── Hero.tsx
@@ -56,14 +62,24 @@ npm run build  # type-check + bundle minificado em dist/
         ├── Tratamentos.tsx
         ├── Pricing.tsx
         ├── Contact.tsx
-        └── Footer.tsx
+        ├── Footer.tsx
+        ├── SubNav.tsx   ← cabeçalho das páginas internas
+        ├── Stars.tsx
+        ├── Avaliar.tsx  ← página pública de avaliação
+        └── Hub.tsx      ← HUB da staff
 ```
 
 ## Fluxo de renderização
 
 O ponto de entrada é `src/main.tsx`, que monta o componente `App` dentro do elemento `#root` definido em `index.html`.
 
-`src/App.tsx` organiza a página em ordem vertical:
+`src/App.tsx` escolhe entre três telas através do hook `useRoute` (ver *Rotas*):
+
+- `home` → o site institucional, descrito abaixo;
+- `avaliar` → `SubNav` + `Avaliar` + `Footer`;
+- `hub` → `SubNav` + `Hub` + `Footer`.
+
+Na home, o `App` organiza a página em ordem vertical:
 
 1. `Nav`
 2. `Hero`
@@ -78,6 +94,90 @@ O ponto de entrada é `src/main.tsx`, que monta o componente `App` dentro do ele
 11. `Footer`
 
 O `App` também define o hook `useReveal`, que usa `IntersectionObserver` para adicionar a classe `in` aos elementos com classe `reveal` quando eles entram na tela. Essa é a base das animações de entrada.
+
+## Rotas
+
+Não há biblioteca de roteamento. `src/hooks/useRoute.ts` lê `location.hash` e
+distingue dois casos:
+
+- hash que **não** começa com `/` (`#sobre`, `#precos`) → âncora da home, o
+  comportamento original do site;
+- hash que começa com `/` → rota interna.
+
+Rotas existentes:
+
+| Hash | Tela |
+| --- | --- |
+| `#/` ou qualquer âncora | Site institucional |
+| `#/avaliar` | Lista de profissionais para o cliente avaliar |
+| `#/avaliar/:id` | Formulário e painéis de um profissional |
+| `#/hub` | HUB da staff |
+
+O hook também desliga o `scrollRestoration` do browser e leva a página ao topo
+a cada troca de rota; ao voltar para a home com âncora, faz `scrollIntoView` no
+alvo (que só existe depois do render da home).
+
+Como o servidor de dev e o build servem sempre o mesmo `index.html`, o hash
+funciona em produção sem configuração de servidor.
+
+## Avaliações
+
+### `data/reviews.ts`
+
+Concentra tipos, dados de exemplo e o store. Os componentes nunca falam com o
+`localStorage` direto — trocar por uma API é trocar só este arquivo.
+
+- `CRITERIA`: os seis critérios avaliados (qualidade, cordialidade, técnica,
+  higiene, pontualidade, experiência geral).
+- `Professional`: `id`, `name`, `role`, `photo`, `active`.
+- `Review`: profissional, cliente (vazio = anônimo), nota por critério,
+  comentário, data, `status` (`pendente` | `publicada` | `oculta`) e `source`
+  (`cliente` | `staff`).
+- Store: `subscribe` / `getState` no formato de `useSyncExternalStore`, mais
+  `addReview`, `setReviewStatus`, `deleteReview`, `addProfessional`,
+  `toggleProfessional`, `removeProfessional` e `resetStore`.
+- Derivados: `statsFor` (média, nota dos últimos 30 dias, tendência contra os 30
+  anteriores, média por critério, % de avaliações ≥ 4), `monthlySeries`,
+  `reviewAverage`, `formatDate`.
+
+Chave usada: `levita.reviews.v1`. Sem nada salvo, o store nasce com uma base de
+exemplo determinística (~75 avaliações e 2 pendentes). O botão *Repor dados de
+exemplo*, no HUB, volta a esse estado.
+
+`statsFor().trend` é `null` quando falta base de comparação em algum dos dois
+períodos — a interface mostra “sem base” em vez de uma variação inventada.
+
+### `components/Avaliar.tsx` — página pública (`#/avaliar`)
+
+Duas telas no mesmo componente:
+
+1. **Lista** — cards dos profissionais ativos com média, número de avaliações e
+   botão para avaliar, seguidos de uma faixa de números da clínica.
+2. **Detalhe** (`#/avaliar/:id`) — barra lateral com abas *Visão geral*
+   (formulário), *Avaliações*, *Evolução* (média mensal dos últimos 6 meses),
+   *Comentários* e *Comparativo* (profissional × média da clínica por critério);
+   ao lado, o toggle de avaliação anônima e o cartão de resumo.
+
+O formulário exige nota nos seis critérios e grava a avaliação como
+`pendente` — ela só aparece publicamente depois de liberada no HUB.
+
+### `components/Hub.tsx` — HUB da staff (`#/hub`)
+
+Sem login por enquanto: a rota é aberta e linkada como *Área da Clínica*.
+
+- Quatro KPIs: avaliações publicadas, média geral, aguardando revisão e
+  profissionais ativos.
+- **Visão geral**: ranking da equipe por média e feed das últimas avaliações.
+- **Avaliações**: filtros por profissional, status e busca livre; cada linha
+  permite publicar, ocultar ou excluir (exclusão pede confirmação inline).
+- **Profissionais**: ativar/desativar, remover (apaga as avaliações do
+  profissional) e adicionar alguém à equipe.
+- **Nova avaliação**: registro manual de um atendimento avaliado no balcão.
+
+### `components/Stars.tsx`
+
+Estrelas em dois modos: leitura (aceita fração, usada nas médias) e entrada
+(botões com `role="radio"`), quando recebe `onChange`.
 
 ## Estilo e design
 
@@ -258,12 +358,17 @@ Principais grupos:
 - Lista de tratamentos: `src/components/Tratamentos.tsx`
 - Valores e pacotes: `src/components/Pricing.tsx`
 - Contato, horários e WhatsApp: `src/components/Contact.tsx`
+- Critérios de avaliação, dados de exemplo e regras de cálculo: `src/data/reviews.ts`
+- Página pública de avaliação: `src/components/Avaliar.tsx`
+- HUB da staff: `src/components/Hub.tsx`
+- Rotas internas: `src/hooks/useRoute.ts`
 - Cores, espaçamentos, responsividade e animações: `src/styles.css`
 
 ## Observações técnicas
 
-- A aplicação não possui roteamento; a navegação é feita por âncoras na mesma página.
-- Não há chamadas para API ou backend.
-- Não há gerenciamento global de estado; apenas `Pricing` usa estado local para alternar abas.
+- O roteamento é por hash e vive em `src/hooks/useRoute.ts`; dentro da home a navegação continua por âncoras.
+- Não há chamadas para API ou backend: as avaliações vivem no `localStorage` do navegador de quem abre a página, então cada dispositivo tem a sua cópia.
+- O HUB não tem autenticação — quem souber a URL entra. Antes de ir para produção com dados reais, ele precisa de login de verdade e de um backend compartilhado.
+- Estado global só existe no store de avaliações (`subscribe`/`getState` + `useSyncExternalStore`); o resto é estado local de componente.
 - O build roda `tsc --noEmit` antes do esbuild, então erros de tipagem bloqueiam a geração da versão final.
 - `node_modules` e `dist` existem localmente, mas não fazem parte da arquitetura fonte do projeto.

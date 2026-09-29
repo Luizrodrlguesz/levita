@@ -53,6 +53,7 @@ export default function Nav() {
         <a href="#sobre">Sobre</a>
         <a href="#tratamentos">Tratamentos</a>
         <a href="#precos">Valores</a>
+        <a href="#/hub">Área da Clínica</a>
       </nav>
     </header>
   );

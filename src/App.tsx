@@ -10,8 +10,12 @@ import Tratamentos from './components/Tratamentos';
 import Pricing from './components/Pricing';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import SubNav from './components/SubNav';
+import Avaliar from './components/Avaliar';
+import Hub from './components/Hub';
+import useRoute from './hooks/useRoute';
 
-function useReveal() {
+function useReveal(key: string) {
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>('.reveal');
     const io = new IntersectionObserver(
@@ -27,11 +31,33 @@ function useReveal() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [key]);
 }
 
 export default function App() {
-  useReveal();
+  const route = useRoute();
+  useReveal(`${route.name}:${route.param ?? ''}`);
+
+  if (route.name === 'avaliar') {
+    return (
+      <>
+        <SubNav active="avaliar" />
+        <Avaliar professionalId={route.param} />
+        <Footer />
+      </>
+    );
+  }
+
+  if (route.name === 'hub') {
+    return (
+      <>
+        <SubNav active="hub" />
+        <Hub />
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Nav />

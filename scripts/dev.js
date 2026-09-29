@@ -49,7 +49,7 @@ function send(res, filePath) {
   });
 }
 
-http.createServer((req, res) => {
+const server = http.createServer((req, res) => {
   const urlPath = (req.url ?? '/').split('?')[0];
 
   if (urlPath === '/main.js' || urlPath === '/main.js.map' || urlPath === '/main.css') {
@@ -68,4 +68,20 @@ http.createServer((req, res) => {
   }
 
   send(res, path.join(root, 'index.html'));
-}).listen(3000, () => console.log('Dev server: http://localhost:3000'));
+});
+
+// Porta configurável via PORT; se estiver ocupada, tenta a próxima.
+let port = Number(process.env.PORT) || 3000;
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.warn(`Porta ${port} ocupada, tentando ${port + 1}...`);
+    port += 1;
+    server.listen(port);
+    return;
+  }
+  throw err;
+});
+
+server.on('listening', () => console.log(`Dev server: http://localhost:${port}`));
+server.listen(port);
