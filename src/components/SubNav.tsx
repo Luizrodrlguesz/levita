@@ -1,14 +1,19 @@
 import type { RouteName } from '../hooks/useRoute';
+import useShop from '../hooks/useShop';
+import { cartCount } from '../data/shop';
+import { BagIcon } from './Loja';
 
 interface SubNavProps {
   active: RouteName;
 }
 
 /**
- * Cabeçalho claro usado nas páginas internas (avaliação e HUB).
- * A home continua com o `Nav` sobreposto ao hero.
+ * Cabeçalho claro das páginas internas públicas (loja e avaliação).
+ * Mesmos destinos do `Nav` da home — a área da equipe tem o seu próprio
+ * dashboard (`Hub`) e não aparece aqui.
  */
 export default function SubNav({ active }: SubNavProps) {
+  const count = cartCount(useShop().cart);
   return (
     <header className="subnav">
       <div className="container subnav__inner">
@@ -21,26 +26,24 @@ export default function SubNav({ active }: SubNavProps) {
         </a>
 
         <nav className="subnav__links">
-          <a href="#/">Início</a>
-          <a className={active === 'avaliar' ? 'is-active' : ''} href="#/avaliar">
-            Avaliar Profissional
+          <a href="#sobre">Sobre</a>
+          <a href="#massagens">Massagens</a>
+          <a href="#tratamentos">Tratamentos</a>
+          <a href="#precos">Valores</a>
+          <a className={active === 'loja' ? 'is-active' : ''} href="#/loja">
+            Loja
           </a>
-          <a href="#sobre">Sobre a Clínica</a>
-          <a href="#contato">Contato</a>
         </nav>
 
-        <a className={`subnav__cta ${active === 'hub' ? 'is-active' : ''}`} href="#/hub">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              d="M7 10V7a5 5 0 0110 0v3M5 10h14v10H5z"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinejoin="round"
-            />
-          </svg>
-          Área da Clínica
-        </a>
+        <div className="subnav__actions">
+          <a className="subnav__bag" href="#/loja/carrinho" aria-label={`Sacola (${count} itens)`}>
+            <BagIcon />
+            {count > 0 && <span>{count}</span>}
+          </a>
+          <a className="subnav__cta" href="https://wa.me/351920129484" target="_blank" rel="noreferrer">
+            Agendar
+          </a>
+        </div>
       </div>
     </header>
   );

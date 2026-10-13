@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import SubNav from './components/SubNav';
 import Avaliar from './components/Avaliar';
 import Hub from './components/Hub';
+import Loja from './components/Loja';
 import useRoute from './hooks/useRoute';
 
 function useReveal(key: string) {
@@ -36,7 +37,7 @@ function useReveal(key: string) {
 
 export default function App() {
   const route = useRoute();
-  useReveal(`${route.name}:${route.param ?? ''}`);
+  useReveal(`${route.name}:${route.param ?? ''}:${route.sub ?? ''}`);
 
   if (route.name === 'avaliar') {
     return (
@@ -48,14 +49,19 @@ export default function App() {
     );
   }
 
-  if (route.name === 'hub') {
+  if (route.name === 'loja') {
     return (
       <>
-        <SubNav active="hub" />
-        <Hub />
+        <SubNav active="loja" />
+        <Loja param={route.param} />
         <Footer />
       </>
     );
+  }
+
+  if (route.name === 'hub') {
+    // dashboard com cabeçalho e navegação próprios (login quando não há sessão)
+    return <Hub section={route.param} sub={route.sub} />;
   }
 
   return (

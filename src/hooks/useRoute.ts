@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
 
-export type RouteName = 'home' | 'avaliar' | 'hub';
+export type RouteName = 'home' | 'avaliar' | 'hub' | 'loja';
 
 export interface Route {
   name: RouteName;
-  /** segmento extra da rota — hoje, o id do profissional em `#/avaliar/:id` */
+  /** segmento extra da rota — id do profissional (`#/avaliar/:id`) ou do produto (`#/loja/:id`) */
   param?: string;
+  /** terceiro segmento — item dentro de uma seção (`#/hub/produtos/:id`) */
+  sub?: string;
 }
 
 function parse(hash: string): Route {
   const raw = hash.replace(/^#/, '');
   // âncoras da home (`#sobre`, `#precos`) não começam com barra
   if (!raw.startsWith('/')) return { name: 'home' };
-  const [segment, param] = raw.slice(1).split('/');
+  const [segment, param, sub] = raw.slice(1).split('/').map(decodeURIComponent);
   if (segment === 'avaliar') return { name: 'avaliar', param: param || undefined };
-  if (segment === 'hub') return { name: 'hub', param: param || undefined };
+  if (segment === 'hub') return { name: 'hub', param: param || undefined, sub: sub || undefined };
+  if (segment === 'loja') return { name: 'loja', param: param || undefined };
   return { name: 'home' };
 }
 
@@ -46,7 +49,7 @@ export default function useRoute(): Route {
     // `scroll-behavior: smooth` no html faria a troca de rota virar animação;
     // aqui queremos o topo imediatamente.
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
-  }, [route.name, route.param]);
+  }, [route.name, route.param, route.sub]);
 
   return route;
 }

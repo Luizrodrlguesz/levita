@@ -46,10 +46,14 @@ npm run build  # type-check + bundle minificado em dist/
     ├── App.tsx
     ├── styles.css
     ├── data/
-    │   └── reviews.ts   ← store de avaliações (localStorage)
+    │   ├── reviews.ts   ← store de avaliações (localStorage)
+    │   ├── shop.ts      ← produtos, carrinho e pedidos (localStorage)
+    │   └── staff.ts     ← contas da equipe, cargos e sessão do HUB
     ├── hooks/
     │   ├── useRoute.ts  ← router por hash
-    │   └── useReviews.ts
+    │   ├── useReviews.ts
+    │   ├── useShop.ts
+    │   └── useStaff.ts
     └── components/
         ├── Nav.tsx
         ├── Hero.tsx
@@ -66,7 +70,10 @@ npm run build  # type-check + bundle minificado em dist/
         ├── SubNav.tsx   ← cabeçalho das páginas internas
         ├── Stars.tsx
         ├── Avaliar.tsx  ← página pública de avaliação
-        └── Hub.tsx      ← HUB da staff
+        ├── Hub.tsx      ← dashboard: menu lateral, permissões, visão geral, moderação
+        ├── hub/         ← login, meu painel, perfil, equipe, produtos, pedidos, ui
+        ├── Loja.tsx     ← loja: catálogo, produto, sacola, pedido
+        └── ProductArt.tsx ← ilustrações SVG das embalagens
 ```
 
 ## Fluxo de renderização
@@ -77,7 +84,8 @@ O ponto de entrada é `src/main.tsx`, que monta o componente `App` dentro do ele
 
 - `home` → o site institucional, descrito abaixo;
 - `avaliar` → `SubNav` + `Avaliar` + `Footer`;
-- `hub` → `SubNav` + `Hub` + `Footer`.
+- `hub` → `Hub` sozinho (login ou dashboard com navegação própria);
+- `loja` → `SubNav` + `Loja` + `Footer`.
 
 Na home, o `App` organiza a página em ordem vertical:
 
@@ -111,7 +119,12 @@ Rotas existentes:
 | `#/` ou qualquer âncora | Site institucional |
 | `#/avaliar` | Lista de profissionais para o cliente avaliar |
 | `#/avaliar/:id` | Formulário e painéis de um profissional |
-| `#/hub` | HUB da staff |
+| `#/hub` | Login da equipe ou dashboard |
+| `#/hub/:secao` | Seção do dashboard (`visao`, `painel`, `minhas`, `avaliacoes`, `nova`, `produtos`, `pedidos`, `equipe`, `perfil`) |
+| `#/loja` | Catálogo da loja |
+| `#/loja/:id` | Página de produto |
+| `#/loja/carrinho` | Sacola + checkout |
+| `#/loja/pedido` | Confirmação do último pedido |
 
 O hook também desliga o `scrollRestoration` do browser e leva a página ao topo
 a cada troca de rota; ao voltar para a home com âncora, faz `scrollIntoView` no
@@ -129,7 +142,10 @@ Concentra tipos, dados de exemplo e o store. Os componentes nunca falam com o
 
 - `CRITERIA`: os seis critérios avaliados (qualidade, cordialidade, técnica,
   higiene, pontualidade, experiência geral).
-- `Professional`: `id`, `name`, `role`, `photo`, `active`.
+- `Professional`: `id`, `name`, `role` (cargo), `description`, `site`
+  (`fundadora` | `equipe` | `oculto`), `photo`, `active`. É a **fonte única** do
+  que a página inicial mostra em “Sobre a Levitá” (`About.tsx`), do card da
+  página de avaliação e do cargo no HUB.
 - `Review`: profissional, cliente (vazio = anônimo), nota por critério,
   comentário, data, `status` (`pendente` | `publicada` | `oculta`) e `source`
   (`cliente` | `staff`).
@@ -163,16 +179,10 @@ O formulário exige nota nos seis critérios e grava a avaliação como
 
 ### `components/Hub.tsx` — HUB da staff (`#/hub`)
 
-Sem login por enquanto: a rota é aberta e linkada como *Área da Clínica*.
-
-- Quatro KPIs: avaliações publicadas, média geral, aguardando revisão e
-  profissionais ativos.
-- **Visão geral**: ranking da equipe por média e feed das últimas avaliações.
-- **Avaliações**: filtros por profissional, status e busca livre; cada linha
-  permite publicar, ocultar ou excluir (exclusão pede confirmação inline).
-- **Profissionais**: ativar/desativar, remover (apaga as avaliações do
-  profissional) e adicionar alguém à equipe.
-- **Nova avaliação**: registro manual de um atendimento avaliado no balcão.
+Sem sessão, mostra `hub/HubLogin`. Com sessão, um dashboard com menu lateral
+cujas seções dependem do cargo — ver *HUB — autenticação e cargos* no fim
+deste documento. A seção ativa fica no hash (`#/hub/produtos`), então
+recarregar a página mantém a tela.
 
 ### `components/Stars.tsx`
 
@@ -372,3 +382,107 @@ Principais grupos:
 - Estado global só existe no store de avaliações (`subscribe`/`getState` + `useSyncExternalStore`); o resto é estado local de componente.
 - O build roda `tsc --noEmit` antes do esbuild, então erros de tipagem bloqueiam a geração da versão final.
 - `node_modules` e `dist` existem localmente, mas não fazem parte da arquitetura fonte do projeto.
+
+## Loja (protótipo)
+
+Módulo de e-commerce para apresentação ao cliente. Os produtos são
+ilustrativos (nome, preço, textos) e não há fotos: cada embalagem é desenhada
+em SVG por `components/ProductArt.tsx` a partir de `art.shape` + `art.palette`.
+
+### `data/shop.ts`
+
+- `SEED_PRODUCTS` / `CATEGORIES`: catálogo inicial (editável no HUB). `options` cobre tamanhos e os
+  valores do vale-presente; `compareAt` é o preço riscado; `pairsWith` liga o
+  produto a um tratamento da clínica.
+- Store no formato de `useSyncExternalStore` com `cart` e `lastOrder`, chave
+  `levita.cart.v1`. Funções: `addToCart`, `setQty`, `placeOrder`.
+- Envio grátis a partir de `FREE_SHIPPING_FROM` (60 €), senão `SHIPPING_PRICE`;
+  levantamento na clínica é sempre grátis.
+
+O checkout não processa pagamento — `placeOrder` só gera o número do pedido,
+limpa a sacola e guarda o pedido para a tela de confirmação. Trocar por
+Shopify/Stripe/Easypay é trocar este arquivo.
+
+### Contraste das páginas internas
+
+`#/avaliar`, `#/hub` e `#/loja` usam `--surface-page` (fundo um tom abaixo do
+creme) com cartões em `--surface-card`, borda `--surface-line` e sombra
+`--surface-shadow`, definidos em `:root`.
+
+### Navegação por público
+
+- **Site (cliente):** `Nav` (home) e `SubNav` (loja, avaliação) mostram só
+  Sobre · Método/Massagens · Tratamentos · Valores · Loja, mais sacola e Agendar.
+- **Avaliar profissional:** fora do menu; acesso pelo rodapé ou por link/QR
+  enviado ao cliente depois da sessão.
+- **Área da Clínica (`#/hub`):** dashboard com menu lateral próprio e “Voltar
+  ao site”; no site público só existe o link discreto “Acesso equipe” no
+  rodapé.
+
+## HUB — autenticação e cargos (protótipo)
+
+> Contas, senhas e sessão vivem no **localStorage** e as permissões são
+> aplicadas só na interface. Serve para apresentar o fluxo ao cliente; em
+> produção isto vai para um backend (senhas com hash, sessão no servidor e
+> permissões verificadas na API).
+
+### `data/staff.ts`
+
+- `StaffAccount`: nome, e-mail, senha, `role` (`admin` | `equipe`), cargo
+  (`title`), telemóvel, foto, `active` e `professionalId` — o perfil público
+  avaliado pelos clientes (`null` para contas só de gestão).
+- Nome, foto, cargo, descrição e exibição no site são gravados no
+  `Professional` correspondente (`updateAccount` → `updateProfessional`): o que
+  um admin edita em *Equipe → Editar* aparece na página inicial e na página de
+  avaliação na hora. O cargo da conta é sempre o do perfil público.
+- No editor, o bloco **Perfil no site** traz cargo, descrição (até 220
+  caracteres) e onde a pessoa aparece — card em “Nossa equipe”, destaque da
+  fundadora ou fora do site — com uma prévia igual à da página inicial.
+- Regras: a clínica nunca fica sem um admin ativo (`setRole`, `toggleStaff` e
+  `removeStaff` devolvem `false`); ninguém se desativa ou remove a si próprio
+  pela tela de equipe; contas desativadas não entram.
+- `resetAll` volta avaliações, equipe, produtos e pedidos aos dados de exemplo.
+- Chaves: `levita.staff.v1` (contas) e `levita.session.v1` (sessão).
+
+Contas de exemplo: `<primeiro-nome>@levita.pt` (ex.: `luiz@levita.pt`,
+`lucas@levita.pt`) com a senha `levita2026`. Admins: Luiz (gestão, sem perfil
+público) e Lucas. A tela de login também tem um **acesso de demonstração** que
+entra com um clique em qualquer conta ativa.
+
+### O que cada cargo vê
+
+| Seção | Admin | Equipe |
+| --- | --- | --- |
+| Visão geral (vendas, avaliações, ranking) | ✓ | |
+| Meu painel / Minhas avaliações | ✓ se atende | ✓ |
+| Moderação e registro de avaliações | ✓ | |
+| Produtos (criar, editar, ocultar, remover) | ✓ | |
+| Pedidos (status) | ✓ | |
+| Equipe (adicionar, remover, cargo, permissão) | ✓ | |
+| Meu perfil (dados, foto, senha) | ✓ | ✓ |
+
+Uma seção não permitida no hash (`#/hub/produtos` para a equipe) cai na
+primeira seção visível.
+
+### Fluxo de edição
+
+Nada é editado dentro da tabela nem em modal. Cada linha tem um botão de
+**Ações (⋯)** (`hub/ui.tsx` → `ActionsMenu`); “Editar” e “+ Novo” abrem uma
+tela própria com rota própria:
+
+| Rota | Tela |
+| --- | --- |
+| `#/hub/produtos/novo` · `#/hub/produtos/:id` | Criar / editar produto |
+| `#/hub/equipe/novo` · `#/hub/equipe/:id` | Criar / editar funcionário (cargo, permissão, redefinir senha) |
+| `#/hub/pedidos/:numero` | Pedido: itens, cliente e alteração de status |
+
+Ações que não são edição de dados (ocultar/mostrar produto, ativar/desativar
+acesso, publicar/ocultar avaliação, remover) ficam no próprio menu; remover
+pede um segundo clique (“Confirmar remoção”).
+
+### Loja administrável
+
+Os produtos passaram a viver no store (`levita.products.v1`, semeado com o
+catálogo inicial) e a loja mostra só os `active`. Os pedidos ficam em
+`levita.orders.v1`, com ~3 meses de exemplo para o dashboard e status
+`novo` → `enviado` → `concluido` (ou `cancelado`).

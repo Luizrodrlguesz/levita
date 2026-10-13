@@ -45,10 +45,17 @@ export type CriterionKey = (typeof CRITERIA)[number]['key'];
 
 export type ReviewStatus = 'pendente' | 'publicada' | 'oculta';
 
+/** onde a pessoa aparece na landing page (seção "Sobre a Levitá") */
+export type SitePlacement = 'fundadora' | 'equipe' | 'oculto';
+
 export interface Professional {
   id: string;
   name: string;
+  /** cargo exibido na LP, na página de avaliação e no HUB */
   role: string;
+  /** texto sobre o que a pessoa faz, exibido na LP */
+  description: string;
+  site: SitePlacement;
   photo: string;
   active: boolean;
 }
@@ -72,40 +79,56 @@ export interface ReviewsState {
 
 /* ---------- seed ---------- */
 
+// mesma ordem e textos da seção "Sobre a Levitá" da landing page
 const seedProfessionals: Professional[] = [
   {
     id: 'adrian',
     name: 'Adrian Gomes',
-    role: 'Fundadora · Massoterapeuta',
+    role: 'Fundadora · Criadora do Método',
+    description:
+      'Fundadora da marca e criadora do Método Redux Luxe® — uma técnica exclusiva focada em drenagem, modelação e escultura corporal, com resultados visíveis já na primeira sessão.',
+    site: 'fundadora',
     photo: '/assets/adrian-2.jpg',
-    active: true,
-  },
-  {
-    id: 'maria',
-    name: 'Maria Eduarda',
-    role: 'Massoterapeuta',
-    photo: '/assets/maria-eduarda.jpg',
-    active: true,
-  },
-  {
-    id: 'amanda',
-    name: 'Amanda Lima',
-    role: 'Massoterapeuta',
-    photo: '/assets/amanda-lima.jpg',
-    active: true,
-  },
-  {
-    id: 'yudelkis',
-    name: 'Yudelkis',
-    role: 'Esteticista',
-    photo: '/assets/Yudelkis.jpg',
     active: true,
   },
   {
     id: 'lucas',
     name: 'Lucas Neves',
-    role: 'Massoterapeuta',
+    role: 'Gerente',
+    description:
+      'Responsável pela gestão da Levitá, assegura a excelência no atendimento, a organização da equipa e uma experiência de qualidade em cada etapa da jornada da cliente.',
+    site: 'equipe',
     photo: '/assets/lucas-neves.jpg',
+    active: true,
+  },
+  {
+    id: 'yudelkis',
+    name: 'Yudelkis',
+    role: 'Terapeuta Corporal',
+    description:
+      'Especialista em protocolos de modelação corporal, alia técnica apurada e sensibilidade para entregar resultados visíveis em cada sessão.',
+    site: 'equipe',
+    photo: '/assets/Yudelkis.jpg',
+    active: true,
+  },
+  {
+    id: 'amanda',
+    name: 'Amanda Lima',
+    role: 'Terapeuta Corporal',
+    description:
+      'Combina drenagem linfática, modelação corporal e técnicas manuais avançadas, promovendo resultados visíveis com uma experiência verdadeiramente relaxante.',
+    site: 'equipe',
+    photo: '/assets/amanda-lima.jpg',
+    active: true,
+  },
+  {
+    id: 'maria',
+    name: 'Maria Eduarda',
+    role: 'Terapeuta Corporal',
+    description:
+      'Aplica protocolos de modelação e drenagem linfática com atenção aos detalhes, cuidando de cada cliente com agilidade e dedicação.',
+    site: 'equipe',
+    photo: '/assets/maria-eduarda.jpg',
     active: true,
   },
 ];
@@ -233,10 +256,22 @@ function load(): ReviewsState {
     if (!Array.isArray(parsed.professionals) || !Array.isArray(parsed.reviews)) {
       return seedState();
     }
-    return { professionals: parsed.professionals, reviews: parsed.reviews };
+    return { professionals: parsed.professionals.map(migrateProfessional), reviews: parsed.reviews };
   } catch {
     return seedState();
   }
+}
+
+/**
+ * Dados salvos antes de a LP ler daqui não têm `description`/`site`: completa
+ * com o texto da LP (ou vazio, para quem foi criado no HUB).
+ */
+function migrateProfessional(p: Professional): Professional {
+  if (p.description !== undefined && p.site !== undefined) return p;
+  const seed = seedProfessionals.find((s) => s.id === p.id);
+  return seed
+    ? { ...p, role: seed.role, description: seed.description, site: seed.site }
+    : { ...p, description: '', site: 'oculto' };
 }
 
 function persist() {
@@ -292,9 +327,19 @@ export function addProfessional(input: Omit<Professional, 'id'>): Professional {
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '') || newId();
-  const pro: Professional = { ...input, id };
+  const pro: Professional = {
+    ...input,
+    id: state.professionals.some((p) => p.id === id) ? `${id}-${newId()}` : id,
+  };
   commit({ ...state, professionals: [...state.professionals, pro] });
   return pro;
+}
+
+export function updateProfessional(id: string, patch: Partial<Omit<Professional, 'id'>>) {
+  commit({
+    ...state,
+    professionals: state.professionals.map((p) => (p.id === id ? { ...p, ...patch } : p)),
+  });
 }
 
 export function toggleProfessional(id: string) {

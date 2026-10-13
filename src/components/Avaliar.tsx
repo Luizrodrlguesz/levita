@@ -397,7 +397,7 @@ function RateForm({ pro, reviews }: { pro: Professional; reviews: Review[] }) {
 
 /* ---------------- painéis auxiliares ---------------- */
 
-function ReviewList({
+export function ReviewList({
   reviews,
   title,
   empty,
@@ -426,7 +426,7 @@ function ReviewList({
   );
 }
 
-function Evolution({ reviews }: { reviews: Review[] }) {
+export function Evolution({ reviews }: { reviews: Review[] }) {
   const series = monthlySeries(reviews);
   // as notas vivem quase todas entre 3 e 5; ancorar a barra em 3 torna a
   // variação mensal legível
@@ -458,7 +458,7 @@ function Evolution({ reviews }: { reviews: Review[] }) {
   );
 }
 
-function Comparison({
+export function Comparison({
   reviews,
   mine,
   name,

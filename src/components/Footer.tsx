@@ -11,11 +11,14 @@ export default function Footer() {
           <a href="#metodo">Método</a>
           <a href="#precos">Valores</a>
           <a href="#contato">Contato</a>
-          <a href="#/avaliar">Avaliar</a>
-          <a href="#/hub">Área da Clínica</a>
+          <a href="#/loja">Loja</a>
+          <a href="#/avaliar">Avaliar profissional</a>
         </div>
         <div className="footer__copy">
           © {new Date().getFullYear()} Levitá Massagem · Lisboa
+          <a className="footer__staff" href="#/hub">
+            Acesso equipe
+          </a>
         </div>
       </div>
     </footer>

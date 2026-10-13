@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
+import useShop from '../hooks/useShop';
+import { cartCount } from '../data/shop';
+import { BagIcon } from './Loja';
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const count = cartCount(useShop().cart);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -27,8 +31,13 @@ export default function Nav() {
         <a href="#massagens">Massagens</a>
         <a href="#tratamentos">Tratamentos</a>
         <a href="#precos">Valores</a>
+        <a href="#/loja">Loja</a>
       </nav>
       <div className="nav__actions">
+        <a className="nav__bag" href="#/loja/carrinho" aria-label={`Sacola (${count} itens)`}>
+          <BagIcon />
+          {count > 0 && <span>{count}</span>}
+        </a>
         <a
           className="nav__cta"
           href="https://wa.me/351920129484"
@@ -53,7 +62,7 @@ export default function Nav() {
         <a href="#sobre">Sobre</a>
         <a href="#tratamentos">Tratamentos</a>
         <a href="#precos">Valores</a>
-        <a href="#/hub">Área da Clínica</a>
+        <a href="#/loja">Loja</a>
       </nav>
     </header>
   );
