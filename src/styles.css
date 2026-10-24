@@ -537,11 +537,17 @@ section {
   margin-bottom: 40px;
 }
 .about__staff-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(24px, 3vw, 40px);
+  --staff-gap: clamp(24px, 3vw, 40px);
+  --staff-cols: 4;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--staff-gap);
 }
-.about__staff-card { text-align: center; }
+.about__staff-card {
+  flex: 0 1 calc((100% - (var(--staff-cols) - 1) * var(--staff-gap)) / var(--staff-cols));
+  text-align: center;
+}
 .about__staff-photo {
   position: relative;
   border-radius: 4px;
@@ -579,10 +585,10 @@ section {
   margin: 0;
 }
 @media (max-width: 880px) {
-  .about__staff-grid { grid-template-columns: repeat(2, 1fr); }
+  .about__staff-grid { --staff-cols: 2; }
 }
 @media (max-width: 520px) {
-  .about__staff-grid { grid-template-columns: 1fr; }
+  .about__staff-grid { --staff-cols: 1; }
 }
 
 /* ---------- Decorative ornament ---------- */

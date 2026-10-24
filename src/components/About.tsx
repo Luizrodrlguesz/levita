@@ -7,13 +7,6 @@ const staff = [
       'Responsável pela gestão da Levitá, assegura a excelência no atendimento, a organização da equipa e uma experiência de qualidade em cada etapa da jornada da cliente.',
   },
   {
-    name: 'Yudelkis',
-    role: 'Terapeuta Corporal',
-    photo: '/assets/Yudelkis.jpg',
-    description:
-      'Especialista em protocolos de modelação corporal, alia técnica apurada e sensibilidade para entregar resultados visíveis em cada sessão.',
-  },
-  {
     name: 'Amanda Lima',
     role: 'Terapeuta Corporal',
     photo: '/assets/amanda-lima.jpg',
